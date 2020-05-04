@@ -4,16 +4,12 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
-    <Connector URIEncoding="cp1251"/>
-    <request-character-encoding>cp1251</request-character-encoding>
-    <response-character-encoding>cp1251</response-character-encoding>
 
     <servlet>
         <servlet-name>cookbook</servlet-name>
         <servlet-class>ru.itpark.servlet.CookServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
-        <request-character-encoding>cp1251</request-character-encoding>
-        <response-character-encoding>cp1251</response-character-encoding>
+
     </servlet>
     <servlet-mapping>
         <servlet-name>cookbook</servlet-name>
