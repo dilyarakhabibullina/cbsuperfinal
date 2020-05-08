@@ -9,6 +9,7 @@ import ru.itpark.util.JdbcTemplate;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.*;
 import java.util.Collection;
@@ -26,6 +27,7 @@ public class CookService {
     //public Path path;
     private Path uploadPath;
     private Path path;
+    private Part file;
 
     public CookService() {
 
@@ -57,7 +59,7 @@ public class CookService {
     }
 
 
-    public int saveDataBase(Recipe recipe) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, SQLException, IOException {
+    public int saveDataBase(Recipe recipe, Part file, Path uploadPath) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, SQLException, IOException {
         String url = "jdbc:sqlite:D:\\DANASHOP_test\\cbsuperfinal\\db1";
         Class.forName("org.sqlite.JDBC").getDeclaredConstructor().newInstance();
         Connection conn = DriverManager.getConnection(url);
@@ -71,6 +73,7 @@ public class CookService {
                 preparedStatement.setString(4, recipe.getDescription());
 
             }
+            writeFile(recipe.generateId(), file, uploadPath);
            return preparedStatement.executeUpdate();
 //
         }
@@ -161,9 +164,9 @@ public class CookService {
 
 //
 
-    public Object removeById(String id)
+    public Object removeById(String id, Path path)
             throws
-            SQLException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, InvocationTargetException {
+            SQLException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, InvocationTargetException, IOException {
         String url = "jdbc:sqlite:D:\\DANASHOP_test\\cbsuperfinal\\db1";
         Class.forName("org.sqlite.JDBC").getDeclaredConstructor().newInstance();
         Connection conn = DriverManager.getConnection(url);
@@ -172,6 +175,7 @@ public class CookService {
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             {
                 preparedStatement.setString(1, id);
+                Files.deleteIfExists(path.resolve(id));
                 return preparedStatement.executeUpdate();
             }
 
@@ -180,10 +184,10 @@ public class CookService {
     }
 
     public List<Recipe> deleteId(String id) throws
-            NoSuchMethodException, IllegalAccessException, InstantiationException, SQLException, InvocationTargetException, ClassNotFoundException {
+            NoSuchMethodException, IllegalAccessException, InstantiationException, SQLException, InvocationTargetException, ClassNotFoundException, IOException {
         Recipe recipe = getById(id);
         id = recipe.getId();
-        removeById(id);
+        removeById(id, uploadPath);
         List<Recipe> foundToEdit = getAll();
         return foundToEdit;
     }

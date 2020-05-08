@@ -20,7 +20,9 @@
 <h4> <%=request.getAttribute("myrecipes")%></h4>
 
 
-<img src="/Upload/king.jpg"/>
+<img src="<%= request.getContextPath() %>/king.jpg">
+<img src="/Upload/king.jpg">
+
 <form action="/search">
 <input name="q" placeholder="Поиск">
 </form>

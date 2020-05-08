@@ -1,9 +1,11 @@
 package ru.itpark.servlet;
 
+import lombok.var;
 import ru.itpark.domain.Recipe;
 import ru.itpark.service.CookService;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -63,6 +65,10 @@ public class CookServlet extends HttpServlet {
             }
             req.getRequestDispatcher("/WEB-INF/frontpage.jsp").forward(req, resp);
         }
+        if (url.startsWith("/images/")) {
+            req.setAttribute("pic", "king.jpg");
+            getServletContext().getRequestDispatcher("/frontpage.jsp").forward(req, resp);
+        }
     }
 
     @Override
@@ -89,7 +95,7 @@ public class CookServlet extends HttpServlet {
 
             try {
                 // String MyValue = new String(req.getParameter("name").getBytes(req.getCharacterEncoding()), "UTF-8");
-                service.saveDataBase(new Recipe(recipe.getId(), name, ingredients, description));
+                service.saveDataBase(new Recipe(recipe.getId(), name, ingredients, description), file, uploadPath);
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             } catch (NoSuchMethodException e) {
@@ -111,7 +117,7 @@ public class CookServlet extends HttpServlet {
 
             final String id = req.getParameter("id");
             try {
-                service.removeById(id);
+                service.removeById(id, uploadPath);
             } catch (SQLException | ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
                 e.printStackTrace();
             }
@@ -152,24 +158,42 @@ public class CookServlet extends HttpServlet {
             }
             req.getRequestDispatcher("/WEB-INF/edit.jsp").forward(req, resp);
         }
-//        if (url.startsWith("/images/")) {
-//            String id = url.substring("/images/".length());
-//            System.out.println(id);
-//            final Path image = uploadPath.resolve(id);
-//            if (Files.exists(image)) {
-//                Files.copy(image, resp.getOutputStream());
-//                return;
-//            }
-//
-//            try {
-//                Files.copy(Paths.get(getServletContext().getResource("/WEB-INF/404.png").toURI()), resp.getOutputStream());
-//            } catch (URISyntaxException e) {
-//                throw new IOException(e);
-//            }
-//        }
+        if (url.startsWith("/images/")) {
 
-      //  req.getRequestDispatcher("/WEB-INF/404.jsp").forward(req, resp);
-    }
-}
+            String id = url.substring("/images/".length());
+            System.out.println(id);
+            final Path image = uploadPath.resolve(id);
+            if (Files.exists(image)) {
+                Files.copy(image, resp.getOutputStream());
+                return;
+            }
+
+            try {
+                Files.copy(Paths.get(getServletContext().getResource("/WEB-INF/404.png").toURI()), resp.getOutputStream());
+            } catch (URISyntaxException e) {
+                throw new IOException(e);
+            }
+        }
+//        if (url.startsWith("/")) {
+//            //String id = url.substring("/images/".length());
+//            //System.out.println(id);
+//        final String image = "king.jpg";
+//           //if (Files.exists(Paths.get("king.jpg"))) {
+//                Files.copy(Paths.get(image), resp.getOutputStream());
+////                var resp1 = (var) Paths.get("king.jpg");
+////                getServletContext().getRequestDispatcher("/frontpage.jsp").forward(req, (ServletResponse) resp1);
+//              //  return;
+//           // }
+//
+////            try {
+////                Files.copy(Paths.get(getServletContext().getResource("/WEB-INF/404.png").toURI()), resp.getOutputStream());
+////            } catch (URISyntaxException e) {
+////                throw new IOException(e);
+////            }
+////        }
+//
+//      //  req.getRequestDispatcher("/WEB-INF/404.jsp").forward(req, resp);
+//    }
+}}
 
 
