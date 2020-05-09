@@ -7,7 +7,7 @@ import java.util.List;
 public class JdbcTemplate {
 
 
-    private JdbcTemplate() {
+    public JdbcTemplate() {
     }
 
 
@@ -28,8 +28,8 @@ public class JdbcTemplate {
     }
     public static int executeUpdate(String url, String sql) throws SQLException {
         Connection connection = DriverManager.getConnection (url);
-        Statement statement = connection.createStatement ( );
-        int s = statement.executeUpdate (sql);
+        PreparedStatement preparedStatement = connection.prepareStatement (sql);
+        int s = preparedStatement.executeUpdate (sql);
         return s;
 
     }

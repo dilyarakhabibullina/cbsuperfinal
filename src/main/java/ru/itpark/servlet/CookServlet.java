@@ -11,17 +11,28 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 
-public class CookServlet extends HttpServlet {
 
-//    protected void doFilterInternal (HttpServletRequest req, HttpServletResponse resp, FilterChain filterChain) throws IOException, ServletException {
+
+public class CookServlet extends HttpServlet {
+    CookService service = new CookService ( );
+
+public CookServlet () {}
+
+//    public CookServlet(CookService service) {
+//        this.service = service;
+//    }
+
+
+    //    protected void doFilterInternal (HttpServletRequest req, HttpServletResponse resp, FilterChain filterChain) throws IOException, ServletException {
 //        req.setCharacterEncoding ("cp1251");
 //        filterChain.doFilter (req, resp);
 //    }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
 
-        CookService service = new CookService ( );
+        //CookService service = new CookService ( );
         String url = req.getRequestURI ( ).substring (req.getContextPath ( ).length ( ));
         if (url.equals ("/")) {
             req.setAttribute ("myrecipes", "Мои рецепты");
@@ -50,20 +61,83 @@ public class CookServlet extends HttpServlet {
     }
 
     @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        CookService service = new CookService ( );
+    public void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException, ServletException {
+       // CookService service = new CookService ( );
         final String action = req.getParameter ("action");
 
         Recipe recipe = new Recipe ( );
-        final String id = req.getParameter ("id");
-        if (action.equals ("remove")) {
+
+        //final String id = req.getParameter ("id");
+        if (action.equals ("save")) {
+          // final String id = req.getParameter ("id");
+         //   req.setCharacterEncoding ("cp1281");
+
+            final String name = req.getParameter ("name");
+            final String ingredients = req.getParameter ("ingredients");
+            final String description = req.getParameter ("description");
             try {
-               service.removeById (id);
+                service.saveDataBase (new Recipe(recipe.getId (), name, ingredients, description));
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace ( );
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace ( );
+            } catch (IllegalAccessException e) {
+                e.printStackTrace ( );
+            } catch (InvocationTargetException e) {
+                e.printStackTrace ( );
+            } catch (InstantiationException e) {
+                e.printStackTrace ( );
+            } catch (SQLException e) {
+                e.printStackTrace ( );
+            }
+            resp.setCharacterEncoding ("cp1281");
+            resp.sendRedirect (req.getRequestURI ());
+            return;
+        }
+        if (action.equals ("remove")) {
+            final String id = req.getParameter ("id");
+            try {
+                service.removeById (id);
             } catch (SQLException | ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
                 e.printStackTrace ( );
             }
             resp.sendRedirect (req.getRequestURI ( ));
             return;
+        }
+        if (action.equals ("edit")) {
+final String id = req.getParameter ("id");
+            try {
+                req.setAttribute ("item", service.getById (id));
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace ( );
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace ( );
+            } catch (IllegalAccessException e) {
+                e.printStackTrace ( );
+            } catch (InvocationTargetException e) {
+                e.printStackTrace ( );
+            } catch (InstantiationException e) {
+                e.printStackTrace ( );
+            } catch (SQLException e) {
+                e.printStackTrace ( );
+            }
+            try {
+                req.setAttribute ("recipes", service.deleteId (id));
+            } catch (SQLException e) {
+                e.printStackTrace ( );
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace ( );
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace ( );
+            } catch (InvocationTargetException e) {
+                e.printStackTrace ( );
+            } catch (InstantiationException e) {
+                e.printStackTrace ( );
+            } catch (IllegalAccessException e) {
+                e.printStackTrace ( );
+            }
+            req.getRequestDispatcher ("/WEB-INF/frontpage.jsp").forward (req, resp);
         }
     }
 }

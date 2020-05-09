@@ -5,12 +5,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Recipe {
-    private String id;
+    public String id = generateId();
     private String name;
     private String ingredients;
     private String description;
+
+    public String generateId() {
+        return UUID.randomUUID ( ).toString ( );
     }
+}

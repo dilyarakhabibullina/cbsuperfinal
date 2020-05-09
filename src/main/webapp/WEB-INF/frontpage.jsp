@@ -21,7 +21,8 @@
 
 </form>
 <div class="list-group">
-<% for (Recipe item : (Collection<Recipe>)request.getAttribute("recipes")) { %>
+
+<% for (Recipe item: (Collection<Recipe>) request.getAttribute("recipes")) { %>
 <div class="list-group-item">
 <h4><%= item.getName() %></h4>
 <h5><%= item.getDescription() %></h5>
@@ -39,6 +40,20 @@
 </div>
 
 <% } %>
+
 </div>
+
+
+<% Recipe item = (Recipe) request.getAttribute("item"); %>
+<form action="<%= request.getContextPath() %>/" method="post">
+<input type="hidden" name="id" value="<%= item == null ? "" : item.getId() %>">
+<input type="hidden" name="action" value="save">
+<input name="name" placeholder="Название рецепта" value="<%= item == null ? "" : item.getName() %>">
+<input name="ingredients" placeholder="Состав" value="<%= item == null ? "" : item.getIngredients() %>">
+<input name="description" placeholder="Описание" value="<%= item == null ? "" : item.getDescription() %>">
+<button>Сохранить</button>
+</form>
+
+
 </body>
 </html>
