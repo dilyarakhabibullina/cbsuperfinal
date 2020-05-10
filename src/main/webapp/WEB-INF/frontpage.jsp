@@ -15,12 +15,12 @@
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
+
+<div class="container">
 <h4> <%=request.getAttribute("myrecipes")%></h4>
 <form action="/search">
 <input name="q" placeholder="Поиск">
 
-</form>
-<div class="list-group">
 
 <% for (Recipe item: (Collection<Recipe>) request.getAttribute("recipes")) { %>
 <div class="list-group-item">
@@ -42,18 +42,23 @@
 <% } %>
 
 </div>
+</form>
 
 
-<% Recipe item = (Recipe) request.getAttribute("item"); %>
+<% Recipe rec = (Recipe) request.getAttribute("item"); %>
 <form action="<%= request.getContextPath() %>/" method="post">
-<input type="hidden" name="id" value="<%= item == null ? "" : item.getId() %>">
+<input type="hidden" name="id" value="<%= rec == null ? "" : rec.getId() %>">
 <input type="hidden" name="action" value="save">
-<input name="name" placeholder="Название рецепта" value="<%= item == null ? "" : item.getName() %>">
-<input name="ingredients" placeholder="Состав" value="<%= item == null ? "" : item.getIngredients() %>">
-<input name="description" placeholder="Описание" value="<%= item == null ? "" : item.getDescription() %>">
+<input name="name" placeholder="Название рецепта" value="<%= rec == null ? "" : rec.getName() %>">
+<input name="ingredients" placeholder="Состав" value="<%= rec == null ? "" : rec.getIngredients() %>">
+<textarea name="description" placeholder="Описание" value="<%= rec == null ? "" : rec.getDescription() %>"></textarea>
 <button>Сохранить</button>
 </form>
 
 
+
+
+
+</div>
 </body>
 </html>

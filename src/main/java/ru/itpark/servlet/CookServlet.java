@@ -137,7 +137,7 @@ final String id = req.getParameter ("id");
             } catch (IllegalAccessException e) {
                 e.printStackTrace ( );
             }
-            req.getRequestDispatcher ("/WEB-INF/frontpage.jsp").forward (req, resp);
+            req.getRequestDispatcher ("/WEB-INF/edit.jsp").forward (req, resp);
         }
     }
 }

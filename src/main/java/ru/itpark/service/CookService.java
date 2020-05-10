@@ -92,25 +92,25 @@ public class CookService {
         }
     }
 
-public int edit (String name, String ingredients, String description) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, SQLException {
-        String url ="jdbc:sqlite:D:\\DANASHOP_test\\cbsuperfinal\\db1";
-        Class.forName ("org.sqlite.JDBC").getDeclaredConstructor ().newInstance ();
-        Connection conn = DriverManager.getConnection (url);
-    {
-        String sql = "UPDATE recipe SET name=?, ingredients=?, description=?";
-        PreparedStatement preparedStatement = conn.prepareStatement (sql);
-        {
-            preparedStatement.setString (1, "name");
-            preparedStatement.setString (2, "ingredients");
-            preparedStatement.setString (3, "description");
-            return preparedStatement.executeUpdate ();
-        }
-
-
-
-
-    }
-}
+//public int edit (String name, String ingredients, String description) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, SQLException {
+//        String url ="jdbc:sqlite:D:\\DANASHOP_test\\cbsuperfinal\\db1";
+//        Class.forName ("org.sqlite.JDBC").getDeclaredConstructor ().newInstance ();
+//        Connection conn = DriverManager.getConnection (url);
+//    {
+//        String sql = "UPDATE recipe SET name=?, ingredients=?, description=?";
+//        PreparedStatement preparedStatement = conn.prepareStatement (sql);
+//        {
+//            preparedStatement.setString (1, "name");
+//            preparedStatement.setString (2, "ingredients");
+//            preparedStatement.setString (3, "description");
+//            return preparedStatement.executeUpdate ();
+//        }
+//
+//
+//
+//
+//    }
+// }
 //    public List<Recipe> deleteId(String id) throws NoSuchMethodException, IllegalAccessException, InstantiationException, SQLException, InvocationTargetException, ClassNotFoundException {
 //        Recipe recipe = getById (id);
 //        id=recipe.getId ();
