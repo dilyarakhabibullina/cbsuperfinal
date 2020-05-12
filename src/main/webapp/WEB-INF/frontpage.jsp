@@ -20,13 +20,30 @@
 <h4> <%=request.getAttribute("myrecipes")%></h4>
 <form action="/search">
 <input name="q" placeholder="Поиск">
+</form>
+
+
+<div class="row" padding="10px">
+
 
 
 <% for (Recipe item: (Collection<Recipe>) request.getAttribute("recipes")) { %>
-<div class="list-group-item">
-<h4><%= item.getName() %></h4>
-<h5><%= item.getDescription() %></h5>
-<p> <%= item.getIngredients() %></p>
+<div class="col-sm-4 m-3">
+
+
+<div class="card">
+  <img class="card-img-top" src="..." alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title"><%= item.getName() %></h5>
+
+  </div>
+  <ul class="list-group list-group-flush">
+   <li class="list-group-item">Состав: <%= item.getIngredients() %></li>
+    <li class="list-group-item">Описание: <%= item.getDescription() %></li>
+
+  </ul>
+  <div class="card-body">
+
 <form action="<%= request.getContextPath() %>/edit" method="post">
 <input type="hidden" name="id" value="<%= item.getId() %>">
 <input type="hidden" name="action" value="edit">
@@ -37,12 +54,18 @@
 <input type="hidden" name="action" value="remove">
 <button>Удалить</button>
 </form>
+
+  </div>
+  </div>
 </div>
 
 <% } %>
-
 </div>
-</form>
+
+
+
+
+
 
 
 <% Recipe rec = (Recipe) request.getAttribute("item"); %>
