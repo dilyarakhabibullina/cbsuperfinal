@@ -1,14 +1,30 @@
 package ru.itpark.service;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.itpark.domain.Recipe;
 import ru.itpark.util.JdbcTemplate;
 
+
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+@Data
+@AllArgsConstructor
+
+
 public class CookService {
+
+    //public Path path;
+    private Path uploadPath;
+    private Path path;
 
     public CookService() {
 
@@ -52,7 +68,8 @@ public class CookService {
                           .collect (Collectors.toList ( ));
     }
 
-    public int removeById(String id) throws SQLException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, InvocationTargetException {
+    public int removeById(String id, Path uploadPath) 
+            throws SQLException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, InvocationTargetException {
         String url = "jdbc:sqlite:D:\\DANASHOP_test\\cbsuperfinal\\db1";
         Class.forName ("org.sqlite.JDBC").getDeclaredConstructor ( ).newInstance ( );
         Connection conn = DriverManager.getConnection (url);
@@ -119,11 +136,12 @@ public class CookService {
 //        return foundToEdit;
 //    }
 
-    public List<Recipe> deleteId(String id) throws SQLException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    public List<Recipe> deleteId(String id) throws SQLException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, IOException {
 
         Recipe recipe = getById (id);
         id = recipe.getId ( );
-        removeById (id);
+        Files.deleteIfExists(path.resolve(id));
+        removeById (id, uploadPath);
         List<Recipe> foundToEdit = getAll ( );
         return foundToEdit;
 

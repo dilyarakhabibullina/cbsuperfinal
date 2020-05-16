@@ -7,16 +7,22 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
-
 
 
 public class CookServlet extends HttpServlet {
     CookService service = new CookService ( );
+    private Path uploadPath;
 
-public CookServlet () {}
+    public CookServlet() {
+    }
 
 //    public CookServlet(CookService service) {
 //        this.service = service;
@@ -63,21 +69,23 @@ public CookServlet () {}
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws IOException, ServletException {
-       // CookService service = new CookService ( );
+        // CookService service = new CookService ( );
+        String url = req.getRequestURI ( ).substring (req.getContextPath ( ).length ( ));
         final String action = req.getParameter ("action");
 
         Recipe recipe = new Recipe ( );
 
         //final String id = req.getParameter ("id");
         if (action.equals ("save")) {
-          // final String id = req.getParameter ("id");
-         //   req.setCharacterEncoding ("cp1281");
+            final String id = req.getParameter ("id");
+            //   req.setCharacterEncoding ("cp1281");
 
             final String name = req.getParameter ("name");
             final String ingredients = req.getParameter ("ingredients");
             final String description = req.getParameter ("description");
+            final Part file = req.getPart ("file");
             try {
-                service.saveDataBase (new Recipe(recipe.getId (), name, ingredients, description));
+                service.saveDataBase (new Recipe (recipe.getId ( ), name, ingredients, description));
             } catch (ClassNotFoundException e) {
                 e.printStackTrace ( );
             } catch (NoSuchMethodException e) {
@@ -92,13 +100,14 @@ public CookServlet () {}
                 e.printStackTrace ( );
             }
             resp.setCharacterEncoding ("cp1281");
-            resp.sendRedirect (req.getRequestURI ());
+            resp.sendRedirect (req.getRequestURI ( ));
             return;
         }
         if (action.equals ("remove")) {
+
             final String id = req.getParameter ("id");
             try {
-                service.removeById (id);
+                service.removeById (id, uploadPath);
             } catch (SQLException | ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
                 e.printStackTrace ( );
             }
@@ -106,7 +115,7 @@ public CookServlet () {}
             return;
         }
         if (action.equals ("edit")) {
-final String id = req.getParameter ("id");
+            final String id = req.getParameter ("id");
             try {
                 req.setAttribute ("item", service.getById (id));
             } catch (ClassNotFoundException e) {
@@ -139,5 +148,23 @@ final String id = req.getParameter ("id");
             }
             req.getRequestDispatcher ("/WEB-INF/edit.jsp").forward (req, resp);
         }
+        if (url.startsWith ("/images/")) {
+            String id = url.substring ("/images/".length ( ));
+            System.out.println (id);
+            final Path image = uploadPath.resolve (id);
+            if (Files.exists (image)) {
+                Files.copy (image, resp.getOutputStream ( ));
+                return;
+            }
+
+            try {
+                Files.copy (Paths.get (getServletContext ( ).getResource ("/WEB-INF/404.png").toURI ( )), resp.getOutputStream ( ));
+            } catch (URISyntaxException e) {
+                throw new IOException (e);
+            }
+        }
+
+        req.getRequestDispatcher ("/WEB-INF/404.jsp").forward (req, resp);
     }
 }
+

@@ -69,12 +69,13 @@
 
 
 <% Recipe rec = (Recipe) request.getAttribute("item"); %>
-<form action="<%= request.getContextPath() %>/" method="post">
+<form action="<%= request.getContextPath() %>/" method="post" enctype="multipart/form-data">
 <input type="hidden" name="id" value="<%= rec == null ? "" : rec.getId() %>">
 <input type="hidden" name="action" value="save">
 <input name="name" placeholder="Название рецепта" value="<%= rec == null ? "" : rec.getName() %>">
 <input name="ingredients" placeholder="Состав" value="<%= rec == null ? "" : rec.getIngredients() %>">
 <textarea name="description" placeholder="Описание" value="<%= rec == null ? "" : rec.getDescription() %>"></textarea>
+<input type ="file" name= "file" accept="image/*">
 <button>Сохранить</button>
 </form>
 

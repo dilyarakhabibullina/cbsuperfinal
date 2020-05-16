@@ -16,6 +16,7 @@ public class Recipe {
     private String ingredients;
     private String description;
 
+
     public String generateId() {
         return UUID.randomUUID ( ).toString ( );
     }
