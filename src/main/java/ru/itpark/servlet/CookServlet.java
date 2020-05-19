@@ -148,23 +148,23 @@ public class CookServlet extends HttpServlet {
             }
             req.getRequestDispatcher ("/WEB-INF/edit.jsp").forward (req, resp);
         }
-        if (url.startsWith ("/images/")) {
-            String id = url.substring ("/images/".length ( ));
-            System.out.println (id);
-            final Path image = uploadPath.resolve (id);
-            if (Files.exists (image)) {
-                Files.copy (image, resp.getOutputStream ( ));
-                return;
-            }
+//        if (url.startsWith ("/images/")) {
+//            String id = url.substring ("/images/".length ( ));
+//            System.out.println (id);
+//            final Path image = uploadPath.resolve (id);
+//            if (Files.exists (image)) {
+//                Files.copy (image, resp.getOutputStream ( ));
+//                return;
+//            }
+//
+//            try {
+//                Files.copy (Paths.get (getServletContext ( ).getResource ("/WEB-INF/404.png").toURI ( )), resp.getOutputStream ( ));
+//            } catch (URISyntaxException e) {
+//                throw new IOException (e);
+//            }
+//        }
 
-            try {
-                Files.copy (Paths.get (getServletContext ( ).getResource ("/WEB-INF/404.png").toURI ( )), resp.getOutputStream ( ));
-            } catch (URISyntaxException e) {
-                throw new IOException (e);
-            }
-        }
-
-        req.getRequestDispatcher ("/WEB-INF/404.jsp").forward (req, resp);
+      //  req.getRequestDispatcher ("/WEB-INF/404.jsp").forward (req, resp);
     }
 }
 

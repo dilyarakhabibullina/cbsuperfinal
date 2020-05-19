@@ -140,7 +140,7 @@ public class CookService {
 
         Recipe recipe = getById (id);
         id = recipe.getId ( );
-        Files.deleteIfExists(path.resolve(id));
+        //Files.deleteIfExists(path.resolve(id));
         removeById (id, uploadPath);
         List<Recipe> foundToEdit = getAll ( );
         return foundToEdit;
