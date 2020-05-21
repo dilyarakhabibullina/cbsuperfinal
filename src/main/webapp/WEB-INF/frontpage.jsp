@@ -18,6 +18,8 @@
 
 <div class="container">
 <h4> <%=request.getAttribute("myrecipes")%></h4>
+
+<img src="/Upload/king.jpg %>" style="height:75px;"/>
 <form action="/search">
 <input name="q" placeholder="Поиск">
 </form>
@@ -32,7 +34,7 @@
 
 
 <div class="card">
-  <img class="card-img-top" src="..." alt="Card image cap">
+  <img class="card-img-top" src="<%= request.getContextPath() %>/images/<%= item.getId() %>" alt="Card image cap">
   <div class="card-body">
     <h5 class="card-title"><%= item.getName() %></h5>
 
@@ -75,7 +77,7 @@
 <input name="name" placeholder="Название рецепта" value="<%= rec == null ? "" : rec.getName() %>">
 <input name="ingredients" placeholder="Состав" value="<%= rec == null ? "" : rec.getIngredients() %>">
 <textarea name="description" placeholder="Описание" value="<%= rec == null ? "" : rec.getDescription() %>"></textarea>
-<input type ="file" name= "file" accept="image/*">
+<input type ="file" name= "file" accept="image/* ">
 <button>Сохранить</button>
 </form>
 

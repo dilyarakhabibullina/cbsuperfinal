@@ -7,11 +7,14 @@ import ru.itpark.domain.Recipe;
 import ru.itpark.util.JdbcTemplate;
 
 
+import javax.servlet.http.Part;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.*;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +24,7 @@ import java.util.stream.Collectors;
 
 
 public class CookService {
-
+    private final Collection<Recipe> items = new LinkedList<>();
     //public Path path;
     private Path uploadPath;
     private Path path;
@@ -43,8 +46,19 @@ public class CookService {
                 resultSet.getString ("description")
         ));
     }
+    private void writeFile(String id, Part file, Path uploadPath) throws IOException {
+        if (file != null && file.getSize() != 0) {
+           try {
+                file.write(uploadPath.resolve(id).toString());
+                file.delete();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
-    public int saveDataBase(Recipe recipe) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, SQLException {
+
+    public int saveDataBase(Recipe recipe, Part file, Path path) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, SQLException, IOException {
         String url = "jdbc:sqlite:D:\\DANASHOP_test\\cbsuperfinal\\db1";
         Class.forName ("org.sqlite.JDBC").getDeclaredConstructor ( ).newInstance ( );
         Connection conn = DriverManager.getConnection (url);
@@ -58,9 +72,23 @@ public class CookService {
                 preparedStatement.setString (4, recipe.getDescription ( ));
 
             }
+
+            writeFile(recipe.generateId(),
+                    file,
+                    path);
+            update(new Recipe());
             return preparedStatement.executeUpdate ( );
         }
     }
+
+    public void update(Recipe recipe) {
+//        boolean removed = items.removeIf(o -> o.getId().equals(house.getId()));
+//        if (!removed) {
+//            throw new NotFoundException();
+//        }
+        items.add(recipe);
+    }
+
 
     public List<Recipe> searchByName(String name) throws SQLException {
         List<Recipe> foundByName = getAll ( );
@@ -102,7 +130,7 @@ public class CookService {
                 recipe.setId (rs.getString (1));
                 recipe.setName (rs.getString (2));
                 recipe.setIngredients (rs.getString (3));
-                recipe. setDescription (rs.getString (4));
+                recipe.setDescription (rs.getString (4));
                 conn.close ( );
             }
             return recipe;

@@ -19,10 +19,15 @@ import java.sql.SQLException;
 
 public class CookServlet extends HttpServlet {
     CookService service = new CookService ( );
-    private Path uploadPath;
-
+    private Path uploadPath = Paths.get(System.getenv("UPLOAD_PATH"));
+//            if (Files.notExists(uploadPath)) {
+//        Files.createDirectory(uploadPath);
+//    }
     public CookServlet() {
     }
+
+
+
 
 //    public CookServlet(CookService service) {
 //        this.service = service;
@@ -85,7 +90,7 @@ public class CookServlet extends HttpServlet {
             final String description = req.getParameter ("description");
             final Part file = req.getPart ("file");
             try {
-                service.saveDataBase (new Recipe (recipe.getId ( ), name, ingredients, description));
+                service.saveDataBase (new Recipe (recipe.getId ( ), name, ingredients, description),file, uploadPath);
             } catch (ClassNotFoundException e) {
                 e.printStackTrace ( );
             } catch (NoSuchMethodException e) {
