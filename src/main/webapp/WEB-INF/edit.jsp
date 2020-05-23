@@ -15,17 +15,17 @@
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-<h4>������������� ����� �����: </h4>
+<h4>Отредактировать можно здесь: </h4>
 
  <% Recipe item = (Recipe) request.getAttribute("item"); %>
 <form action="<%= request.getContextPath() %>/" method="post" enctype="multipart/form-data">
 <input type="hidden" name="id" value="<%= item == null ? "" : item.getId() %>">
 <input type="hidden" name="action" value="save">
-<input name="name" placeholder="�������� �������" value="<%= item == null ? "" : item.getName() %>">
-<input name="ingredients" placeholder="������" value="<%= item == null ? "" : item.getIngredients() %>">
-<textarea name="description" placeholder="��������" value="<%= item == null ? "" : item.getDescription() %>"></textarea>
+<input name="name" placeholder="Название рецепта" value="<%= item == null ? "" : item.getName() %>">
+<input name="ingredients" placeholder="Состав" value="<%= item == null ? "" : item.getIngredients() %>">
+<textarea name="description" placeholder="Описание" value="<%= item == null ? "" : item.getDescription() %>"></textarea>
 <input type="file" name="file" accept="image/*">
-<button>���������</button>
+<button>Сохранить</button>
 </form>
 
 

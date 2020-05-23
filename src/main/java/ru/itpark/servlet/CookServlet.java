@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
@@ -18,16 +19,11 @@ import java.sql.SQLException;
 
 
 public class CookServlet extends HttpServlet {
-    CookService service = new CookService ( );
-    private Path uploadPath = Paths.get(System.getenv("UPLOAD_PATH"));
-//            if (Files.notExists(uploadPath)) {
-//        Files.createDirectory(uploadPath);
-//    }
+    CookService service = new CookService();
+    public Path uploadPath = Paths.get(System.getenv("UPLOAD_PATH"));
+
     public CookServlet() {
     }
-
-
-
 
 //    public CookServlet(CookService service) {
 //        this.service = service;
@@ -44,30 +40,32 @@ public class CookServlet extends HttpServlet {
             throws ServletException, IOException {
 
         //CookService service = new CookService ( );
-        String url = req.getRequestURI ( ).substring (req.getContextPath ( ).length ( ));
-        if (url.equals ("/")) {
-            req.setAttribute ("myrecipes", "Мои рецепты");
+        String url = req.getRequestURI().substring(req.getContextPath().length());
+
+        if (url.equals("/")) {
+            resp.setContentType("image/*");
+            req.setAttribute("myrecipes", "РњРѕРё СЂРµС†РµРїС‚С‹");
 
 
             try {
-                req.setAttribute ("recipes", service.getAll ( ));
+                req.setAttribute("recipes", service.getAll());
             } catch (SQLException e) {
-                e.printStackTrace ( );
+                e.printStackTrace();
             }
-            req.getRequestDispatcher ("/WEB-INF/frontpage.jsp").forward (req, resp);
+            req.getRequestDispatcher("/WEB-INF/frontpage.jsp").forward(req, resp);
 
         }
-        if (url.equals ("/search")) {
-            //  req.setCharacterEncoding ("cp1251");
+        if (url.equals("/search")) {
+            req.setCharacterEncoding("cp1251");
 
-            final String q = new String (req.getParameter ("q").getBytes ("ISO-8859-1"), "cp1251");
+            final String q = new String(req.getParameter("q").getBytes("ISO-8859-1"), "cp1251");
             try {
-                req.setAttribute ("myrecipes", "Вот что нашлось");
-                req.setAttribute ("recipes", service.searchByName (q));
+                req.setAttribute("myrecipes", "Р’РѕС‚ С‡С‚Рѕ РЅР°С€Р»РѕСЃСЊ");
+                req.setAttribute("recipes", service.searchByName(q));
             } catch (SQLException e) {
-                e.printStackTrace ( );
+                e.printStackTrace();
             }
-            req.getRequestDispatcher ("/WEB-INF/frontpage.jsp").forward (req, resp);
+            req.getRequestDispatcher("/WEB-INF/frontpage.jsp").forward(req, resp);
         }
     }
 
@@ -75,101 +73,112 @@ public class CookServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws IOException, ServletException {
         // CookService service = new CookService ( );
-        String url = req.getRequestURI ( ).substring (req.getContextPath ( ).length ( ));
-        final String action = req.getParameter ("action");
+        String url = req.getRequestURI().substring(req.getContextPath().length());
+        final String action = req.getParameter("action");
 
-        Recipe recipe = new Recipe ( );
+        Recipe recipe = new Recipe();
 
         //final String id = req.getParameter ("id");
-        if (action.equals ("save")) {
-            final String id = req.getParameter ("id");
+        if (action.equals("save")) {
+            final String id = req.getParameter("id");
             //   req.setCharacterEncoding ("cp1281");
 
-            final String name = req.getParameter ("name");
-            final String ingredients = req.getParameter ("ingredients");
-            final String description = req.getParameter ("description");
-            final Part file = req.getPart ("file");
+            final String name = new String(req.getParameter("name").getBytes("ISO-8859-1"), "cp1251");
+
+            //new String(req.getParameter("q").getBytes("ISO-8859-1"), "cp1251");
+
+
+            final String ingredients = new String(req.getParameter("ingredients").getBytes("ISO-8859-1"), "cp1251");;
+            final String description = new String(req.getParameter("description").getBytes("ISO-8859-1"), "cp1251");
+            final Part file = req.getPart("file");
+
+          //  String MyValue = new String(source_string.getBytes("utf-8"),"cp1251");
+
+
+
             try {
-                service.saveDataBase (new Recipe (recipe.getId ( ), name, ingredients, description),file, uploadPath);
+               // String MyValue = new String(req.getParameter("name").getBytes(req.getCharacterEncoding()), "UTF-8");
+                service.saveDataBase(new Recipe(recipe.getId(), name, ingredients, description), file, uploadPath);
             } catch (ClassNotFoundException e) {
-                e.printStackTrace ( );
+                e.printStackTrace();
             } catch (NoSuchMethodException e) {
-                e.printStackTrace ( );
+                e.printStackTrace();
             } catch (IllegalAccessException e) {
-                e.printStackTrace ( );
+                e.printStackTrace();
             } catch (InvocationTargetException e) {
-                e.printStackTrace ( );
+                e.printStackTrace();
             } catch (InstantiationException e) {
-                e.printStackTrace ( );
+                e.printStackTrace();
             } catch (SQLException e) {
-                e.printStackTrace ( );
+                e.printStackTrace();
             }
-            resp.setCharacterEncoding ("cp1281");
-            resp.sendRedirect (req.getRequestURI ( ));
+            resp.setCharacterEncoding("cp1251");
+            resp.sendRedirect(req.getRequestURI());
             return;
         }
-        if (action.equals ("remove")) {
+        if (action.equals("remove")) {
 
-            final String id = req.getParameter ("id");
+            final String id = req.getParameter("id");
             try {
-                service.removeById (id, uploadPath);
+                service.removeById(id, uploadPath);
             } catch (SQLException | ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
-                e.printStackTrace ( );
+                e.printStackTrace();
             }
-            resp.sendRedirect (req.getRequestURI ( ));
+            resp.sendRedirect(req.getRequestURI());
             return;
         }
-        if (action.equals ("edit")) {
-            final String id = req.getParameter ("id");
+        if (action.equals("edit")) {
+            final String id = req.getParameter("id");
             try {
-                req.setAttribute ("item", service.getById (id));
+                req.setAttribute("item", service.getById(id));
             } catch (ClassNotFoundException e) {
-                e.printStackTrace ( );
+                e.printStackTrace();
             } catch (NoSuchMethodException e) {
-                e.printStackTrace ( );
+                e.printStackTrace();
             } catch (IllegalAccessException e) {
-                e.printStackTrace ( );
+                e.printStackTrace();
             } catch (InvocationTargetException e) {
-                e.printStackTrace ( );
+                e.printStackTrace();
             } catch (InstantiationException e) {
-                e.printStackTrace ( );
+                e.printStackTrace();
             } catch (SQLException e) {
-                e.printStackTrace ( );
+                e.printStackTrace();
             }
             try {
-                req.setAttribute ("recipes", service.deleteId (id));
+                req.setAttribute("recipes", service.deleteId(id));
             } catch (SQLException e) {
-                e.printStackTrace ( );
+                e.printStackTrace();
             } catch (ClassNotFoundException e) {
-                e.printStackTrace ( );
+                e.printStackTrace();
             } catch (NoSuchMethodException e) {
-                e.printStackTrace ( );
+                e.printStackTrace();
             } catch (InvocationTargetException e) {
-                e.printStackTrace ( );
+                e.printStackTrace();
             } catch (InstantiationException e) {
-                e.printStackTrace ( );
+                e.printStackTrace();
             } catch (IllegalAccessException e) {
-                e.printStackTrace ( );
+                e.printStackTrace();
             }
-            req.getRequestDispatcher ("/WEB-INF/edit.jsp").forward (req, resp);
+            req.getRequestDispatcher("/WEB-INF/edit.jsp").forward(req, resp);
         }
-//        if (url.startsWith ("/images/")) {
-//            String id = url.substring ("/images/".length ( ));
-//            System.out.println (id);
-//            final Path image = uploadPath.resolve (id);
-//            if (Files.exists (image)) {
-//                Files.copy (image, resp.getOutputStream ( ));
-//                return;
-//            }
-//
-//            try {
-//                Files.copy (Paths.get (getServletContext ( ).getResource ("/WEB-INF/404.png").toURI ( )), resp.getOutputStream ( ));
-//            } catch (URISyntaxException e) {
-//                throw new IOException (e);
-//            }
-//        }
+        if (url.startsWith("/images/")) {
+            String id = url.substring("/images/".length());
+            System.out.println(id);
+            final Path image = uploadPath.resolve(id);
+            if (Files.exists(image)) {
+                Files.copy(image, resp.getOutputStream());
+                return;
+            }
 
-      //  req.getRequestDispatcher ("/WEB-INF/404.jsp").forward (req, resp);
+            try {
+                Files.copy(Paths.get(getServletContext().getResource("/WEB-INF/404.png").toURI()), resp.getOutputStream());
+            } catch (URISyntaxException e) {
+                throw new IOException(e);
+            }
+        }
+
+        req.getRequestDispatcher("/WEB-INF/404.jsp").forward(req, resp);
     }
 }
+
 

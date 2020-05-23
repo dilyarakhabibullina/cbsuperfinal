@@ -19,9 +19,10 @@
 <div class="container">
 <h4> <%=request.getAttribute("myrecipes")%></h4>
 
-<img src="/Upload/king.jpg %>" style="height:75px;"/>
+
+<img src="/Upload/king.jpg"/>
 <form action="/search">
-<input name="q" placeholder="Поиск">
+<input name="q" placeholder="РџРѕРёСЃРє">
 </form>
 
 
@@ -40,8 +41,8 @@
 
   </div>
   <ul class="list-group list-group-flush">
-   <li class="list-group-item">Состав: <%= item.getIngredients() %></li>
-    <li class="list-group-item">Описание: <%= item.getDescription() %></li>
+   <li class="list-group-item">РЎРѕСЃС‚Р°РІ: <%= item.getIngredients() %></li>
+    <li class="list-group-item">РћРїРёСЃР°РЅРёРµ: <%= item.getDescription() %></li>
 
   </ul>
   <div class="card-body">
@@ -49,12 +50,12 @@
 <form action="<%= request.getContextPath() %>/edit" method="post">
 <input type="hidden" name="id" value="<%= item.getId() %>">
 <input type="hidden" name="action" value="edit">
-<button>Редактировать</button>
+<button>Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ</button>
 </form>
 <form action="<%= request.getContextPath() %>/" method ="post">
 <input type="hidden" name="id" value="<%= item.getId() %>">
 <input type="hidden" name="action" value="remove">
-<button>Удалить</button>
+<button>РЈРґР°Р»РёС‚СЊ</button>
 </form>
 
   </div>
@@ -64,26 +65,16 @@
 <% } %>
 </div>
 
-
-
-
-
-
-
 <% Recipe rec = (Recipe) request.getAttribute("item"); %>
 <form action="<%= request.getContextPath() %>/" method="post" enctype="multipart/form-data">
 <input type="hidden" name="id" value="<%= rec == null ? "" : rec.getId() %>">
 <input type="hidden" name="action" value="save">
-<input name="name" placeholder="Название рецепта" value="<%= rec == null ? "" : rec.getName() %>">
-<input name="ingredients" placeholder="Состав" value="<%= rec == null ? "" : rec.getIngredients() %>">
-<textarea name="description" placeholder="Описание" value="<%= rec == null ? "" : rec.getDescription() %>"></textarea>
+<input name="name" placeholder="РќР°Р·РІР°РЅРёРµ СЂРµС†РµРїС‚Р°" value="<%= rec == null ? "" : rec.getName() %>">
+<input name="ingredients" placeholder="РЎРѕСЃС‚Р°РІ" value="<%= rec == null ? "" : rec.getIngredients() %>">
+<textarea name="description" placeholder="РћРїРёСЃР°РЅРёРµ" value="<%= rec == null ? "" : rec.getDescription() %>"></textarea>
 <input type ="file" name= "file" accept="image/* ">
-<button>Сохранить</button>
+<button>РЎРѕС…СЂР°РЅРёС‚СЊ</button>
 </form>
-
-
-
-
 
 </div>
 </body>

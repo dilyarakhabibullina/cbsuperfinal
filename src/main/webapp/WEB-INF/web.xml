@@ -9,8 +9,8 @@
         <servlet-name>cookbook</servlet-name>
         <servlet-class>ru.itpark.servlet.CookServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
-        <request-character-encoding>Cp1251</request-character-encoding>
-        <response-character-encoding>Cp1251</response-character-encoding>
+        <request-character-encoding>cp1251</request-character-encoding>
+        <response-character-encoding>cp1251</response-character-encoding>
         <multipart-config>
             <max-file-size>10240</max-file-size>
             <max-request-size>10240</max-request-size>
