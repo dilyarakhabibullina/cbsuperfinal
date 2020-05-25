@@ -64,16 +64,37 @@
 
 <% } %>
 </div>
-
+<label for="basic-url">У тебя есть новый рецепт? Пиши...</label>
 <% Recipe rec = (Recipe) request.getAttribute("item"); %>
 <form action="<%= request.getContextPath() %>/" method="post" enctype="multipart/form-data">
 <input type="hidden" name="id" value="<%= rec == null ? "" : rec.getId() %>">
 <input type="hidden" name="action" value="save">
-<input name="name" placeholder="Название рецепта" value="<%= rec == null ? "" : rec.getName() %>">
-<input name="ingredients" placeholder="Состав" value="<%= rec == null ? "" : rec.getIngredients() %>">
-<textarea name="description" placeholder="Описание" value="<%= rec == null ? "" : rec.getDescription() %>"></textarea>
+
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon3">Название рецепта</span>
+  </div>
+  <input type="text" name="name" value="<%= rec == null ? "" : rec.getName() %>" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+</div>
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text">Состав</span>
+  </div>
+  <input type="text" class="form-control" name="ingredients" aria-label="Ингредиенты" value="<%= rec == null ? "" : rec.getIngredients() %>">
+
+</div>
+
+<div class="input-group">
+  <div class="input-group-prepend">
+    <span class="input-group-text">Описание</span>
+  </div>
+  <textarea name="description" value="<%= rec == null ? "" : rec.getDescription() %>" class="form-control" aria-label="With textarea"></textarea>
+</div>
+
 <input type ="file" name= "file" accept="image/* ">
-<button>Сохранить</button>
+<button class="btn-primary">Сохранить</button>
 </form>
 
 </div>
