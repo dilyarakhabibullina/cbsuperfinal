@@ -97,7 +97,22 @@
 
 <input type ="file" name= "file" accept="image/* ">
 <button class="btn-primary">Сохранить</button>
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+  </div>
+  <div class="custom-file">
+  <input type ="file" name= "file" accept="image/* ">
+  <button class="btn-primary">Сохранить</button>
+
+    <input type="file" name= "file" accept="image/*" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+  </div>
+</div>
 </form>
+</div>
+
 
 </div>
 </body>

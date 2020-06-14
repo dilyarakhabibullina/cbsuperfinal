@@ -66,14 +66,16 @@ public class CookService {
         {
             String sql = "INSERT into RECIPES (id, name, ingredients, description) VALUES (?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            String onlyId = recipe.generateId();
+
             {
-                preparedStatement.setString(1, recipe.generateId());
+                preparedStatement.setString(1, onlyId);
                 preparedStatement.setString(2, recipe.getName());
                 preparedStatement.setString(3, recipe.getIngredients());
                 preparedStatement.setString(4, recipe.getDescription());
 
             }
-            writeFile(recipe.generateId(), file, uploadPath);
+            writeFile(onlyId, file, uploadPath);
            return preparedStatement.executeUpdate();
 //
         }
