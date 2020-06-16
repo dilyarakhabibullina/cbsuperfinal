@@ -95,21 +95,20 @@
   <textarea name="description" value="<%= rec == null ? "" : rec.getDescription() %>" class="form-control" aria-label="With textarea"></textarea>
 </div>
 
-<input type ="file" name= "file" accept="image/* ">
-<button class="btn-primary">Сохранить</button>
+
 
 <div class="input-group mb-3">
   <div class="input-group-prepend">
-    <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+    <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon03">Button</button>
   </div>
   <div class="custom-file">
-  <input type ="file" name= "file" accept="image/* ">
-  <button class="btn-primary">Сохранить</button>
-
-    <input type="file" name= "file" accept="image/*" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+    <input type="file" name ="file" class="custom-file-input" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03">
+    <label class="custom-file-label" for="inputGroupFile03">Choose file</label>
   </div>
 </div>
+
+
+
 </form>
 </div>
 
