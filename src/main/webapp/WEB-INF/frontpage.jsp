@@ -94,25 +94,25 @@
   </div>
   <textarea name="description" value="<%= rec == null ? "" : rec.getDescription() %>" class="form-control" aria-label="With textarea"></textarea>
 </div>
-
-
-
+<p></p>
 <div class="input-group mb-3">
-  <div class="input-group-prepend">
-    <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon03">Button</button>
+<div class="input-group-prepend">
+    <span class="input-group-text">Фото</span>
   </div>
   <div class="custom-file">
-    <input type="file" name ="file" class="custom-file-input" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03">
-    <label class="custom-file-label" for="inputGroupFile03">Choose file</label>
+    <input type="file" name ="file" class="custom-file-input" id="inputGroupFile04">
+    <label class="custom-file-label" for="inputGroupFile04">Выбери файл</label>
   </div>
+  <div class="input-group-append">
+
+  <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon03">Сохранить</button>
+  </div>
+
 </div>
-
-
-
 </form>
 </div>
-
-
 </div>
+
+<%@ include file="bootstrap-scripts.jsp" %>
 </body>
 </html>
