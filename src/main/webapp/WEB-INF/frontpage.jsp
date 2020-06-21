@@ -20,13 +20,14 @@
 <h4> <%=request.getAttribute("myrecipes")%></h4>
 
 
-<img src="<%= request.getContextPath() %>/king.jpg">
-<img src="/Upload/king.jpg">
 
 <form action="/search">
-<input name="q" placeholder="Поиск">
-</form>
+ <div class="form-group">
 
+    <input name="q" placeholder="Название рецепта" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+    <small id="emailHelp" class="form-text text-muted">Это поиск по названию рецепта</small>
+  </div>
+</form>
 
 <div class="row" padding="10px">
 
