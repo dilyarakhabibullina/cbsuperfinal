@@ -49,21 +49,33 @@ public class CookServlet extends HttpServlet {
                 req.setAttribute("recipes", service.getAll());
             } catch (SQLException e) {
                 e.printStackTrace();
-             }
+            }
             req.getRequestDispatcher("/WEB-INF/frontpage.jsp").forward(req, resp);
 
         }
-        if (url.equals("/search")) {
+        if (url.equals("/searchByName")) {
             req.setCharacterEncoding("cp1251");
 
             final String q = new String(req.getParameter("q").getBytes("ISO-8859-1"), "cp1251");
             try {
                 req.setAttribute("myrecipes", "Вот что нашлось");
-                req.setAttribute("recipes", service.searchByName (q));
+                req.setAttribute("recipes", service.searchByName(q));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
             req.getRequestDispatcher("/WEB-INF/frontpage.jsp").forward(req, resp);
+        }
+        if (url.equals("/searchByIngredients")) {
+
+            final String q1 = new String(req.getParameter("q1").getBytes("ISO-8859-1"), "cp1251");
+            try {
+                req.setAttribute("myrecipes", "Вот что нашлось");
+                req.setAttribute("recipes", service.searchByIngredients(q1));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            req.getRequestDispatcher("/WEB-INF/frontpage.jsp").forward(req, resp);
+
         }
         if (url.startsWith("/images/")) {
             req.setAttribute("pic", "king.jpg");
@@ -194,6 +206,7 @@ public class CookServlet extends HttpServlet {
 //
 //      //  req.getRequestDispatcher("/WEB-INF/404.jsp").forward(req, resp);
 //    }
-}}
+    }
+}
 
 

@@ -21,13 +21,25 @@
 
 
 
-<form action="/search">
- <div class="form-group">
+<form action="/searchByName">
+<div class="form-group">
 
-    <input name="q" placeholder="Название рецепта" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+  <input name="q" placeholder="Название рецепта" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+
     <small id="emailHelp" class="form-text text-muted">Это поиск по названию рецепта</small>
   </div>
+  
 </form>
+
+<form action="/searchByIngredients">
+<div class="form-group">
+    <input name="q1" placeholder="Ингредиенты" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+    <small id="emailHelp" class="form-text text-muted">Это поиск по ингредиентам</small>
+  </div>
+</form>
+
+
+
 
 <div class="row" padding="10px">
 

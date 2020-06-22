@@ -86,6 +86,14 @@ public class CookService {
                 .collect(Collectors.toList());
     }
 
+
+    public List<Recipe> searchByIngredients (String ingredients) throws SQLException {
+        List<Recipe> foundByName = getAll();
+        return foundByName.stream().filter(o -> o.getIngredients().contains(ingredients))
+                .collect(Collectors.toList());
+    }
+
+
 //    public void update(Recipe recipe) {
 ////        boolean removed = items.removeIf(o -> o.getId().equals(house.getId()));
 ////        if (!removed) {
