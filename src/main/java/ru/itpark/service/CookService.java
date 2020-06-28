@@ -185,7 +185,7 @@ public class CookService {
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             {
                 preparedStatement.setString(1, id);
-                Files.deleteIfExists(path.resolve(id));
+//                Files.deleteIfExists(path.resolve(id));
                 return preparedStatement.executeUpdate();
             }
 

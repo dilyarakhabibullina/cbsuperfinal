@@ -28,7 +28,7 @@
 
     <small id="emailHelp" class="form-text text-muted">Это поиск по названию рецепта</small>
   </div>
-  
+
 </form>
 
 <form action="/searchByIngredients">
@@ -79,47 +79,10 @@
 
 <% } %>
 </div>
-<label for="basic-url">У тебя есть новый рецепт? Пиши...</label>
-<% Recipe rec = (Recipe) request.getAttribute("item"); %>
-<form action="<%= request.getContextPath() %>/" method="post" enctype="multipart/form-data">
-<input type="hidden" name="id" value="<%= rec == null ? "" : rec.getId() %>">
-<input type="hidden" name="action" value="save">
+
+<a href="/newrecipe">Если у тебя есть новый рецепт, иди сюда!</a>
 
 
-<div class="input-group mb-3">
-  <div class="input-group-prepend">
-    <span class="input-group-text" id="basic-addon3">Название рецепта</span>
-  </div>
-  <input type="text" name="name" value="<%= rec == null ? "" : rec.getName() %>" class="form-control" id="basic-url" aria-describedby="basic-addon3">
-</div>
-
-<div class="input-group mb-3">
-  <div class="input-group-prepend">
-    <span class="input-group-text">Состав</span>
-  </div>
-  <input type="text" class="form-control" name="ingredients" aria-label="Ингредиенты" value="<%= rec == null ? "" : rec.getIngredients() %>">
-
-</div>
-
-<div class="input-group">
-  <div class="input-group-prepend">
-    <span class="input-group-text">Описание</span>
-  </div>
-  <textarea name="description" value="<%= rec == null ? "" : rec.getDescription() %>" class="form-control" aria-label="With textarea"></textarea>
-</div>
-<p></p>
-<div class="input-group mb-3">
-<div class="input-group-prepend">
-    <span class="input-group-text">Фото</span>
-  </div>
-  <div class="custom-file">
-    <input type="file" name ="file" class="custom-file-input" id="inputGroupFile04">
-    <label class="custom-file-label" for="inputGroupFile04">Выбери файл</label>
-  </div>
-  <div class="input-group-append">
-
-  <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon03">Сохранить</button>
-  </div>
 
 </div>
 </form>

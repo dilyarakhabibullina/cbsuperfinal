@@ -77,9 +77,18 @@ public class CookServlet extends HttpServlet {
             req.getRequestDispatcher("/WEB-INF/frontpage.jsp").forward(req, resp);
 
         }
+
+
         if (url.startsWith("/images/")) {
             req.setAttribute("pic", "king.jpg");
             getServletContext().getRequestDispatcher("/frontpage.jsp").forward(req, resp);
+        }
+
+        if (url.equals("/newrecipe")) {
+          // req.setAttribute("myrecipes", "Запиши его сюда");
+           req.getRequestDispatcher("/WEB-INF/newrecipepage.jsp").forward(req, resp);
+            //resp.getWriter().write("ok");
+            //return;
         }
     }
 
@@ -186,6 +195,8 @@ public class CookServlet extends HttpServlet {
                 throw new IOException(e);
             }
         }
+
+
 //        if (url.startsWith("/")) {
 //            //String id = url.substring("/images/".length());
 //            //System.out.println(id);

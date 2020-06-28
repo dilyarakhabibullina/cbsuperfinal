@@ -51,7 +51,7 @@
         </dependency>
     </dependencies>
 
-    <build>
+       <build>
         <finalName>cookbook-2020</finalName>
         <plugins>
             <plugin>
