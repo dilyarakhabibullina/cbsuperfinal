@@ -39,9 +39,9 @@ public class CookServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         String url = req.getRequestURI().substring(req.getContextPath().length());
-
+        req.setCharacterEncoding("UTF-8");
         if (url.equals("/")) {
-            //  resp.setContentType("image/*");
+            req.setCharacterEncoding("UTF-8");
             req.setAttribute("myrecipes", "Мои рецепты");
 
 
@@ -54,9 +54,9 @@ public class CookServlet extends HttpServlet {
 
         }
         if (url.equals("/searchByName")) {
-            req.setCharacterEncoding("cp1251");
+            req.setCharacterEncoding("UTF-8");
 
-            final String q = new String(req.getParameter("q").getBytes("ISO-8859-1"), "cp1251");
+            final String q = new String(req.getParameter("q").getBytes("ISO-8859-1"), "UTF-8");
             try {
                 req.setAttribute("myrecipes", "Вот что нашлось");
                 req.setAttribute("recipes", service.searchByName(q));
@@ -67,7 +67,7 @@ public class CookServlet extends HttpServlet {
         }
         if (url.equals("/searchByIngredients")) {
 
-            final String q1 = new String(req.getParameter("q1").getBytes("ISO-8859-1"), "cp1251");
+            final String q1 = new String(req.getParameter("q1").getBytes("ISO-8859-1"), "UTF-8");
             try {
                 req.setAttribute("myrecipes", "Вот что нашлось");
                 req.setAttribute("recipes", service.searchByIngredients(q1));
@@ -104,11 +104,11 @@ public class CookServlet extends HttpServlet {
         if (action.equals("save")) {
             final String id = req.getParameter("id");
             //   req.setCharacterEncoding ("cp1281");
-            final String name = new String(req.getParameter("name").getBytes("ISO-8859-1"), "cp1251");
+            final String name = new String(req.getParameter("name").getBytes("ISO-8859-1"), "UTF-8");
             //new String(req.getParameter("q").getBytes("ISO-8859-1"), "cp1251");
-            final String ingredients = new String(req.getParameter("ingredients").getBytes("ISO-8859-1"), "cp1251");
+            final String ingredients = new String(req.getParameter("ingredients").getBytes("ISO-8859-1"), "UTF-8");
             ;
-            final String description = new String(req.getParameter("description").getBytes("ISO-8859-1"), "cp1251");
+            final String description = new String(req.getParameter("description").getBytes("ISO-8859-1"), "UTF-8");
             final Part file = req.getPart("file");
 
             //  String MyValue = new String(source_string.getBytes("utf-8"),"cp1251");
