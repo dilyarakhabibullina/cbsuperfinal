@@ -1,7 +1,9 @@
 <%@ page import="ru.itpark.domain.Recipe" %>
 <%@ page import="java.util.Collection" %>
 <%@ page import="java.util.List" %>
-<%@ page  language="java" contentType="text/html;charset=UTF-8"%>
+<%@ page import="java.net.URLEncoder"%>
+<%@ page language="java" contentType="text/html;charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 
 <!doctype html>
 <html lang="en">
@@ -11,14 +13,15 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Книга Рецептов</title>
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
 
 <div class="container">
+//
 <h4> <%=request.getAttribute("myrecipes")%></h4>
-
 
 
 <form action="/searchByName">

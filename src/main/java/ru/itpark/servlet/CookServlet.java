@@ -42,8 +42,10 @@ public class CookServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         if (url.equals("/")) {
             req.setCharacterEncoding("UTF-8");
-            req.setAttribute("myrecipes", "Мои рецепты");
 
+            resp.setCharacterEncoding("UTF-8");
+            resp.setContentType("text/html;charset=UTF-8");
+            req.setAttribute("myrecipes", "Мои рецепты");
 
             try {
                 req.setAttribute("recipes", service.getAll());
