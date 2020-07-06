@@ -20,7 +20,7 @@
 <body>
 
 <div class="container">
-//
+
 <h4> <%=request.getAttribute("myrecipes")%></h4>
 
 

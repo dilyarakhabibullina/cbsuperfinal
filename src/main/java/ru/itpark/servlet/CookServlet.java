@@ -24,6 +24,7 @@ public class CookServlet extends HttpServlet {
     CookService service = new CookService();
     public Path uploadPath = Paths.get(System.getenv("UPLOAD_PATH"));
 
+
     public CookServlet() {
     }
 //    public CookServlet(CookService service) {
@@ -41,11 +42,13 @@ public class CookServlet extends HttpServlet {
         String url = req.getRequestURI().substring(req.getContextPath().length());
         req.setCharacterEncoding("UTF-8");
         if (url.equals("/")) {
+            String myrecipe = new String(("Мои рецепты").getBytes("cp1251"), "UTF-8");
+
             req.setCharacterEncoding("UTF-8");
 
             resp.setCharacterEncoding("UTF-8");
             resp.setContentType("text/html;charset=UTF-8");
-            req.setAttribute("myrecipes", "Мои рецепты");
+            req.setAttribute("myrecipes", myrecipe);
 
             try {
                 req.setAttribute("recipes", service.getAll());
@@ -60,7 +63,9 @@ public class CookServlet extends HttpServlet {
 
             final String q = new String(req.getParameter("q").getBytes("ISO-8859-1"), "UTF-8");
             try {
-                req.setAttribute("myrecipes", "Вот что нашлось");
+
+                final String searchResult = new String(("Вот что нашлось:").getBytes("cp1251"), "UTF-8");
+                req.setAttribute("myrecipes", searchResult);
                 req.setAttribute("recipes", service.searchByName(q));
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -71,7 +76,8 @@ public class CookServlet extends HttpServlet {
 
             final String q1 = new String(req.getParameter("q1").getBytes("ISO-8859-1"), "UTF-8");
             try {
-                req.setAttribute("myrecipes", "Вот что нашлось");
+                final String searchResult = new String(("Вот что нашлось:").getBytes("cp1251"), "UTF-8");
+                req.setAttribute("myrecipes", searchResult);
                 req.setAttribute("recipes", service.searchByIngredients(q1));
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -87,8 +93,8 @@ public class CookServlet extends HttpServlet {
         }
 
         if (url.equals("/newrecipe")) {
-          // req.setAttribute("myrecipes", "Запиши его сюда");
-           req.getRequestDispatcher("/WEB-INF/newrecipepage.jsp").forward(req, resp);
+            // req.setAttribute("myrecipes", "Запиши его сюда");
+            req.getRequestDispatcher("/WEB-INF/newrecipepage.jsp").forward(req, resp);
             //resp.getWriter().write("ok");
             //return;
         }
