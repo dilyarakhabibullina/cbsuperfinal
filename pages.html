@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id = 'page01'>
+    <h1>Первая страница</h1>
+    Содержание страницы 1<br>
+    Это первая страница<br>
+    Не вторая, не третья<br>
+    Это только первая страница! Это начало!<br>
+    <br><br>
+    <a href = '#' onclick = "document.getElementById('page01').style.display='none'; document.getElementById('page02').style.display='block';">Вперед</a>
+</div>
+<div id = 'page02' style='display: none'>
+    <h1>Вторая страница</h1>
+    Содержание страницы 2<br>
+    Это вторая страница<br>
+    Не первая, не третья<br>
+    Это только вторая страница!<br>
+    <br><br>
+    <a href = '#' onclick = "document.getElementById('page02').style.display='none'; document.getElementById('page01').style.display='block';">Назад</a>&nbsp;&nbsp;<a href = '#' onclick = "document.getElementById('page02').style.display='none'; document.getElementById('page03').style.display='block';">Вперед</a>
+</div>
+<div id = 'page03' style='display: none'>
+    <h1>Третья страница</h1>
+    Содержание страницы 3<br>
+    Это последняя страница<br>
+    Не первая, не вторая<br>
+    Это конец!<br>
+    <br><br>
+    <a href = '#' onclick = "document.getElementById('page03').style.display='none'; document.getElementById('page02').style.display='block';">Назад</a>
+</div>
+
+
+
+</body>
+</html>
