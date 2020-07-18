@@ -83,7 +83,30 @@
 <% } %>
 </div>
 
-<a href="/newrecipe">Если у тебя есть новый рецепт, иди сюда!</a>
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item">
+      <a class="page-link" href="/" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item"><a class="page-link" href="/">1</a></li>
+    <li class="page-item"><a class="page-link" href="/second">2</a></li>
+    <li class="page-item"><a class="page-link" href="/three">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="/last" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<a href="/newrecipe">
+<h3>
+Если у тебя есть новый рецепт, иди сюда!
+<h3>
+</a>
 
 
 

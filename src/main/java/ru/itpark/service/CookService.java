@@ -47,6 +47,7 @@ public class CookService {
         ));
     }
 
+
     private void writeFile(String id, Part file, Path uploadPath) throws IOException {
         if (file != null && file.getSize() != 0) {
             try {
@@ -76,18 +77,37 @@ public class CookService {
 
             }
             writeFile(onlyId, file, uploadPath);
-           return preparedStatement.executeUpdate();
+            return preparedStatement.executeUpdate();
 //
         }
     }
-    public List<Recipe> searchByName (String name) throws SQLException {
+
+    public List<Recipe> pageOne() throws SQLException {
+        return getAll().subList(0, 3);
+    }
+    public List<Recipe> pageTwo() throws SQLException {
+        //int length = getAll().size();
+        return getAll().subList(3, 6);
+    }
+    public List<Recipe> pageThree() throws SQLException {
+        return getAll().subList(6, 9);
+    }
+    public List<Recipe> pageLast() throws SQLException {
+        int length = getAll().size();
+        return getAll().subList(9 , length);
+    }
+
+    public List<Recipe> searchByName(String name) throws SQLException {
         List<Recipe> foundByName = getAll();
         return foundByName.stream().filter(o -> o.getName().contains(name))
                 .collect(Collectors.toList());
     }
+//    public List<Recipe> pageSearchByName (String name) throws SQLException {
+//        List<Recipe> foundByName = getAll();
+//        return foundByName.subList(0,5);
+//    }
 
-
-    public List<Recipe> searchByIngredients (String ingredients) throws SQLException {
+    public List<Recipe> searchByIngredients(String ingredients) throws SQLException {
         List<Recipe> foundByName = getAll();
         return foundByName.stream().filter(o -> o.getIngredients().contains(ingredients))
                 .collect(Collectors.toList());
@@ -101,7 +121,6 @@ public class CookService {
 ////        }
 //        items.add(recipe);
 //    }
-
 
 
 //    public int removeById(String id, Path uploadPath)

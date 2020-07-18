@@ -18,7 +18,7 @@
 
 <div class="container">
 <h4> Ура! Новый рецепт!</h4>
-<h4> <%=request.getAttribute("myrecipes")%></h4>
+
 
 
 <label for="basic-url">У тебя есть новый рецепт? Пиши...</label>

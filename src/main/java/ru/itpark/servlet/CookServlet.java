@@ -64,13 +64,65 @@ public class CookServlet extends HttpServlet {
             req.setAttribute("myrecipes", myrecipe);
 
             try {
-                req.setAttribute("recipes", service.getAll());
+                req.setAttribute("recipes", service.pageOne());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
             req.getRequestDispatcher("/WEB-INF/frontpage.jsp").forward(req, resp);
 
         }
+        if (url.equals("/second")) {
+            String myrecipe = new String(("Мои рецепты").getBytes("cp1251"), "UTF-8");
+
+            req.setCharacterEncoding("UTF-8");
+
+            resp.setCharacterEncoding("UTF-8");
+            resp.setContentType("text/html;charset=UTF-8");
+            req.setAttribute("myrecipes", myrecipe);
+
+            try {
+                req.setAttribute("recipes", service.pageTwo());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            req.getRequestDispatcher("/WEB-INF/frontpage.jsp").forward(req, resp);
+
+        }
+        if (url.equals("/three")) {
+            String myrecipe = new String(("Мои рецепты").getBytes("cp1251"), "UTF-8");
+
+            req.setCharacterEncoding("UTF-8");
+
+            resp.setCharacterEncoding("UTF-8");
+            resp.setContentType("text/html;charset=UTF-8");
+            req.setAttribute("myrecipes", myrecipe);
+
+            try {
+                req.setAttribute("recipes", service.pageThree());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            req.getRequestDispatcher("/WEB-INF/frontpage.jsp").forward(req, resp);
+
+        }
+        if (url.equals("/last")) {
+            String myrecipe = new String(("Мои рецепты").getBytes("cp1251"), "UTF-8");
+
+            req.setCharacterEncoding("UTF-8");
+
+            resp.setCharacterEncoding("UTF-8");
+            resp.setContentType("text/html;charset=UTF-8");
+            req.setAttribute("myrecipes", myrecipe);
+
+            try {
+                req.setAttribute("recipes", service.pageLast());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            req.getRequestDispatcher("/WEB-INF/frontpage.jsp").forward(req, resp);
+
+        }
+
         if (url.equals("/searchByName")) {
             req.setCharacterEncoding("UTF-8");
 
